@@ -4,6 +4,7 @@ import { Parser, type RawNode } from '../index.js';
 import Button from './Button.js';
 import NavigationEndpoint from './NavigationEndpoint.js';
 import SubscribeButton from './SubscribeButton.js';
+import SubscribeButtonView from './SubscribeButtonView.js';
 import Author from './misc/Author.js';
 import Text from './misc/Text.js';
 
@@ -17,7 +18,7 @@ export default class Channel extends YTNode {
   long_byline: Text;
   short_byline: Text;
   endpoint: NavigationEndpoint;
-  subscribe_button: SubscribeButton | Button | null;
+  subscribe_button: SubscribeButtonView | Button | null;
   description_snippet: Text;
 
   constructor(data: RawNode) {
@@ -35,7 +36,7 @@ export default class Channel extends YTNode {
     this.long_byline = new Text(data.longBylineText);
     this.short_byline = new Text(data.shortBylineText);
     this.endpoint = new NavigationEndpoint(data.navigationEndpoint);
-    this.subscribe_button = Parser.parseItem(data.subscribeButton, [ SubscribeButton, Button ]);
+    this.subscribe_button = Parser.parseItem(data.subscribeButton, [ SubscribeButton, SubscribeButtonView, Button ]);
     this.description_snippet = new Text(data.descriptionSnippet);
   }
 

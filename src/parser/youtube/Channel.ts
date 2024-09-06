@@ -10,7 +10,6 @@ import AboutChannel from '../classes/AboutChannel.js';
 import ChannelMetadata from '../classes/ChannelMetadata.js';
 import InteractiveTabbedHeader from '../classes/InteractiveTabbedHeader.js';
 import MicroformatData from '../classes/MicroformatData.js';
-import SubscribeButton from '../classes/SubscribeButton.js';
 import ExpandableTab from '../classes/ExpandableTab.js';
 import SectionList from '../classes/SectionList.js';
 import Tab from '../classes/Tab.js';
@@ -26,11 +25,12 @@ import NavigationEndpoint from '../classes/NavigationEndpoint.js';
 import type { AppendContinuationItemsAction, ReloadContinuationItemsCommand } from '../index.js';
 import type { ApiResponse, Actions } from '../../core/index.js';
 import type { IBrowseResponse } from '../types/index.js';
+import { SubscribeButtonView } from '../nodes.js';
 
 export default class Channel extends TabbedFeed<IBrowseResponse> {
   header?: C4TabbedHeader | CarouselHeader | InteractiveTabbedHeader | PageHeader;
   metadata;
-  subscribe_button?: SubscribeButton;
+  subscribe_button?: SubscribeButtonView;
   current_tab?: Tab | ExpandableTab;
 
   constructor(actions: Actions, data: ApiResponse | IBrowseResponse, already_parsed = false) {
@@ -53,7 +53,7 @@ export default class Channel extends TabbedFeed<IBrowseResponse> {
 
     this.metadata = { ...metadata, ...(microformat || {}) };
 
-    this.subscribe_button = this.page.header_memo?.getType(SubscribeButton).first();
+    this.subscribe_button = this.page.header_memo?.getType(SubscribeButtonView).first();
 
     this.current_tab = this.page.contents?.item().as(TwoColumnBrowseResults).tabs.array().filterType(Tab, ExpandableTab).get({ selected: true });
   }
